@@ -7,7 +7,7 @@ import uuid
 
 cookie_transport = CookieTransport(
     cookie_max_age=3600,
-    cookie_samesite="lax",
+    cookie_samesite="none",
     cookie_name="token",
     cookie_secure=False,
     cookie_httponly=False
