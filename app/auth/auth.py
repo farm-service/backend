@@ -9,7 +9,7 @@ cookie_transport = CookieTransport(
     cookie_max_age=3600,
     cookie_samesite="none",
     cookie_name="token",
-    cookie_secure=False,
+    cookie_secure=True,
     cookie_httponly=False
 )
 
