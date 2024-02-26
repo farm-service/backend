@@ -8,7 +8,7 @@ on:
 
 jobs:
   build_and_push:
-    runs-on: dummy_beaver
+    runs-on: [self-hosted, dummy_beaver]
     steps:
       - name: Build and push Docker image
         id: docker_build
