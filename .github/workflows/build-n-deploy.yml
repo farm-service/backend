@@ -1,0 +1,20 @@
+name: Build and Deploy ${{ github.ref }}
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build_and_push:
+    runs-on: dummy_beaver
+    steps:
+      - name: Build and push Docker image
+        id: docker_build
+        uses: docker/build-push-action@v5
+        with:
+          context: .  # Path to the Dockerfile and any other build context
+          push: true
+          tags: |
+            farm-service:latest
+            farm-service:${{ github.sha }}
