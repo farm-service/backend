@@ -25,7 +25,7 @@ jobs:
 
       - name: Inserting FullSemVer into the build
         run: |
-          sed -i "s/BUILD_FULL_SEMANTIC_VERSION = \"dev-build\"/BUILD_FULL_SEMANTIC_VERSION = ${{ steps.gitversion.outputs.FullSemVer }}/" ${{ github.workspace }}/app/configuration/settings.py
+          sed -i "s/BUILD_FULL_SEMANTIC_VERSION = \"dev-build\"/BUILD_FULL_SEMANTIC_VERSION = \"${{ steps.gitversion.outputs.FullSemVer }}\"/" ${{ github.workspace }}/app/configuration/settings.py
 
       - name: Log in to Azure
         uses: azure/login@v2
