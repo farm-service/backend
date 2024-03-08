@@ -23,6 +23,10 @@ jobs:
         id: gitversion
         uses: gittools/actions/gitversion/execute@v0
 
+      - name: Inserting FullSemVer into the build
+        run: |
+          sed -i "s/BUILD_FULL_SEMANTIC_VERSION = \"dev-build\"/BUILD_FULL_SEMANTIC_VERSION = ${{ steps.gitversion.outputs.FullSemVer }}/" ./app/configuration/settings.py
+
       - name: Log in to Azure
         uses: azure/login@v2
         with:
