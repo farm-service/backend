@@ -8,5 +8,6 @@ router: APIRouter = APIRouter(
 @router.get('/test')
 def get_test():
     return {
-        'test': True
+        'test': True,
+        'version': "0.0.0"
     }
