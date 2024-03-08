@@ -69,5 +69,5 @@ jobs:
           acrName: farmserviceacr
           containerAppName: farmservice
           resourceGroup: farmservice_rg
-          imageToBuild: farmserviceacr.azurecr.io/farmservice-backend:${{ steps.gitversion.outputs.fullSemVer }}
+          imageToBuild: farmserviceacr.azurecr.io/farmservice-backend:${{ steps.gitversion.outputs.SemVer }}
 
