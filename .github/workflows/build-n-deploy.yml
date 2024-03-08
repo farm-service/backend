@@ -24,3 +24,5 @@ jobs:
           acrName: farmserviceacr
           containerAppName: farmservice
           resourceGroup: farmservice_rg
+          imageToBuild: farmserviceacr.azurecr.io/farmservice-backend:latest
+
