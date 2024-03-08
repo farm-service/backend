@@ -6,6 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 def create_app(_=None) -> FastAPI:
     app = FastAPI(version=BUILD_FULL_SEMANTIC_VERSION)
+    print(f"Build version: {BUILD_FULL_SEMANTIC_VERSION}")
 
     origins = [
         "http://localhost.tiangolo.com",
