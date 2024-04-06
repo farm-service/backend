@@ -5,7 +5,6 @@ from datetime import datetime
 import uuid
 
 from app.models.base import Base
-from app.models.role import Role
 
 
 class User(SQLAlchemyBaseUserTableUUID, Base):

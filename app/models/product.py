@@ -4,7 +4,6 @@ from sqlalchemy import Column, Integer, TIMESTAMP, ForeignKey, Boolean, String, 
 from sqlalchemy.orm import relationship
 
 from app.models.base import Base
-from app.models.user import User
 
 
 class Product(Base):
@@ -15,3 +14,4 @@ class Product(Base):
     owner_id = Column(UUID, ForeignKey('user.id'))
     owner = relationship('User')
     is_active = Column(Boolean, default=True, nullable=False)
+    ingredients = relationship("ProductIngredientAssociation", back_populates="product")
