@@ -36,8 +36,8 @@ jobs:
         uses: azure/container-apps-deploy-action@v2
         with:
           appSourcePath: ${{ github.workspace }}
-          acrName: farmserviceacr
-          containerAppName: farmservice
+          acrName: farmserviceacr1
+          containerAppName: farmservice-app
           resourceGroup: farmservice_rg
-          imageToBuild: farmserviceacr.azurecr.io/farmservice-backend:${{ steps.gitversion.outputs.SemVer }}
+          imageToBuild: farmserviceacr1.azurecr.io/farmservice-backend:${{ steps.gitversion.outputs.SemVer }}
 
