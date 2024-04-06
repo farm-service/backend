@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends
-from app.auth.models import User
+from app.models.user import User
 from pydantic import BaseModel
 
 router: APIRouter = APIRouter(

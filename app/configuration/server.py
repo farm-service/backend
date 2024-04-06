@@ -4,7 +4,7 @@ import uuid
 from fastapi_users import FastAPIUsers
 from app.configuration.routes import __routes__
 from app.auth.auth import auth_backend
-from app.auth.models import User
+from app.models.user import User
 from app.auth.schemas import UserRead, UserCreate
 from app.auth.manager import get_user_manager
 

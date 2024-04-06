@@ -4,7 +4,7 @@ from typing import Optional
 from fastapi import Depends, Request
 from fastapi_users import BaseUserManager, UUIDIDMixin
 
-from app.auth.models import User
+from app.models.user import User
 from app.auth import get_user_db
 from app.configuration.settings import SECRET_VERIFICATION
 
