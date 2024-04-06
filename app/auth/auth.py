@@ -1,7 +1,7 @@
 from fastapi_users.authentication import JWTStrategy, AuthenticationBackend, CookieTransport
 from app.configuration.settings import SECRET_JWT
 from fastapi_users import FastAPIUsers
-from app.auth.models import User
+from app.models.user import User
 from app.auth.manager import get_user_manager
 import uuid
 
