@@ -9,4 +9,4 @@ router = APIRouter(
 
 @router.get('/me')
 async def authenticated_me(user: User = Depends(current_active_user)):
-    return {"permissions": []}
+    return user
