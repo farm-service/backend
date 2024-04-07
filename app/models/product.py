@@ -15,3 +15,6 @@ class Product(Base):
     owner = relationship('User')
     is_active = Column(Boolean, default=True, nullable=False)
     ingredients = relationship("ProductIngredientAssociation", back_populates="product")
+
+    def __str__(self):
+        return f"{self.id}_{self.name}"

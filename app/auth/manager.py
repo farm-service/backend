@@ -1,8 +1,8 @@
 import uuid
-from typing import Optional
-
+from typing import Optional, Union
+from passlib.context import CryptContext
 from fastapi import Depends, Request
-from fastapi_users import BaseUserManager, UUIDIDMixin
+from fastapi_users import BaseUserManager, UUIDIDMixin, schemas, models
 
 from app.models.user import User
 from app.auth import get_user_db

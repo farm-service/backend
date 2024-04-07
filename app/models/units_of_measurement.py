@@ -9,3 +9,6 @@ class UnitOfMeasurement(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String, unique=True)
     abbreviation = Column(String, unique=True)
+
+    def __str__(self):
+        return f"{self.name}/{self.abbreviation}"
