@@ -19,3 +19,6 @@ class User(SQLAlchemyBaseUserTableUUID, Base):
     is_active = Column(Boolean, default=True, nullable=False)
     is_superuser = Column(Boolean, default=False, nullable=False)
     is_verified = Column(Boolean, default=False, nullable=False)
+
+    def __str__(self):
+        return f'{self.username}'

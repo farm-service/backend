@@ -2,11 +2,17 @@ from fastapi import FastAPI
 import uuid
 
 from fastapi_users import FastAPIUsers
+from sqladmin import Admin
+
+from app.admin.auth import AdminAuth
 from app.configuration.routes import __routes__
+from app.configuration.admin import __admins__
 from app.auth.auth import auth_backend
+from app.configuration.settings import SECRET_JWT
 from app.models.user import User
 from app.auth.schemas import UserRead, UserCreate
 from app.auth.manager import get_user_manager
+from app.auth import engine
 
 
 class Server:
@@ -14,8 +20,10 @@ class Server:
 
     def __init__(self, app: FastAPI):
         self.__app = app
+        self.__engine = engine
         self.__register_routes(app)
         self.__register_events(app)
+        self.__register_admin(app)
 
     def get_app(self) -> FastAPI:
         return self.__app
@@ -41,3 +49,13 @@ class Server:
             tags=["auth"],
         )
         __routes__.register_routes(app)
+
+    @staticmethod
+    def __register_admin(app: FastAPI) -> None:
+        authentication_backend = AdminAuth(secret_key=SECRET_JWT)
+        admin = Admin(
+            app,
+            engine,
+            authentication_backend=authentication_backend
+        )
+        __admins__.register_admins(admin)

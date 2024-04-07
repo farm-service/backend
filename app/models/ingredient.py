@@ -12,3 +12,6 @@ class Ingredient(Base):
     measure_unit_id = Column(Integer, ForeignKey('units_of_measurement.id'))
     measure_unit = relationship("UnitOfMeasurement")
     product = relationship("ProductIngredientAssociation", back_populates="ingredient")
+
+    def __str__(self):
+        return f"{self.id}_{self.name}"

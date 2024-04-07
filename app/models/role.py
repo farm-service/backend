@@ -8,3 +8,6 @@ class Role(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String, nullable=False)
     permissions = Column(JSON)
+
+    def __str__(self):
+        return f'{self.name}'
