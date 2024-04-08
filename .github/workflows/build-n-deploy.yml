@@ -37,8 +37,8 @@ jobs:
         with:
           appSourcePath: ${{ github.workspace }}
           acrName: ${{ secrets.ACR_NAME }}
-          containerAppName: ${{ secrets.CONTAINER_APP_NAME }}
+          containerAppName: $CONTAINER_APP_NAME
           resourceGroup: ${{ secrets.AZURE_RESOURCE_GROUP }}
           ingress: "external"
           targetPort: 8000
-          imageToBuild: ${{ secrets.ACR_NAME }}.azurecr.io/${{ secrets.DOCKER_IMAGE_NAME }}:${{ steps.gitversion.outputs.SemVer }}
+          imageToBuild: ${{ secrets.ACR_NAME }}.azurecr.io/$DOCKER_IMAGE_NAME:${{ steps.gitversion.outputs.SemVer }}
