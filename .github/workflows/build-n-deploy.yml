@@ -47,7 +47,6 @@ jobs:
           --logs-workspace-id ${{ vars.AZURE_MONITORING_WORKSPACE_ID }} \
           --logs-workspace-key ${{ secrets.AZURE_MONITORING_WORKSPACE_KEY }} \
           --resource-group ${{ vars.AZURE_RESOURCE_GROUP }} \
-          --location "${{ vars.AZURE_LOCATION }}" \
           --subscription ${{ vars.AZURE_SUBSCRIPTION_ID }}
 
       - name: Create containerapp
