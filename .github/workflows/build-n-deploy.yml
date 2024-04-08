@@ -36,7 +36,7 @@ jobs:
         run: |
           az monitor log-analytics workspace create \
            --resource-group ${{ vars.AZURE_RESOURCE_GROUP }} \
-           --workspace-name ${{ vars.AZURE_MONITORING_WORKSPACE }} \
+           --workspace-name ${{ vars.AZURE_MONITORING_WORKSPACE_NAME }} \
            --location "${{ vars.AZURE_LOCATION }}" \
            --subscription ${{ vars.AZURE_SUBSCRIPTION_ID }}
 
@@ -44,7 +44,8 @@ jobs:
         run: |
           az containerapp env create \
           --name ${{ vars.AZURE_CAPP_ENV_NAME }} \
-          --logs-workspace-id ${{ vars.AZURE_MONITORING_WORKSPACE }} \
+          --logs-workspace-id ${{ vars.AZURE_MONITORING_WORKSPACE_ID }} \
+          --logs-workspace-key ${{ secrets.AZURE_MONITORING_WORKSPACE_KEY }} \
           --resource-group ${{ vars.AZURE_RESOURCE_GROUP }} \
           --location "${{ vars.AZURE_LOCATION }}" \
           --subscription ${{ vars.AZURE_SUBSCRIPTION_ID }}
