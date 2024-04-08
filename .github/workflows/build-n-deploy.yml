@@ -55,7 +55,6 @@ jobs:
           --name ${{ vars.AZURE_CONTAINER_APP_NAME }} \
           --resource-group ${{ vars.AZURE_RESOURCE_GROUP }} \
           --environment ${{ vars.AZURE_CAPP_ENV_NAME }} \
-          --location "${{ vars.AZURE_LOCATION }}" \
           --subscription ${{ vars.AZURE_SUBSCRIPTION_ID }}
 
       - name: Build and deploy Container App [v${{ steps.gitversion.outputs.SemVer }}]
