@@ -33,7 +33,7 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Creating Azure Monitoring workspace
-        run: az monitor log-analytics workspace create --resource-group $AZURE_RESOURCE_GROUP --workspace-name $AZURE_MONITORING_WORKSPACE --location "$AZURE_LOCATION" --subscription $AZURE_SUBSCRIPTION_ID
+        run: az monitor log-analytics workspace create --resource-group $$AZURE_RESOURCE_GROUP --workspace-name $$AZURE_MONITORING_WORKSPACE --location "$$AZURE_LOCATION" --subscription $$AZURE_SUBSCRIPTION_ID
 
       - name: Create containerapp environment
         run: az containerapp env create --name $AZURE_CAPP_ENV_NAME --logs-workspace-id $AZURE_MONITORING_WORKSPACE --resource-group $AZURE_RESOURCE_GROUP --location "$AZURE_LOCATION" --subscription $AZURE_SUBSCRIPTION_ID
