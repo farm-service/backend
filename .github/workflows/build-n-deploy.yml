@@ -33,21 +33,38 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Creating Azure Monitoring workspace
-        run: az monitor log-analytics workspace create --resource-group $$AZURE_RESOURCE_GROUP --workspace-name $$AZURE_MONITORING_WORKSPACE --location "$$AZURE_LOCATION" --subscription $$AZURE_SUBSCRIPTION_ID
+        run: |
+          az monitor log-analytics workspace create \
+           --resource-group ${{ env.AZURE_RESOURCE_GROUP }} \
+           --workspace-name ${{ env.AZURE_MONITORING_WORKSPACE }} \
+           --location "${{ env.AZURE_LOCATION }}" \
+           --subscription ${{ env.AZURE_SUBSCRIPTION_ID }}
 
       - name: Create containerapp environment
-        run: az containerapp env create --name $AZURE_CAPP_ENV_NAME --logs-workspace-id $AZURE_MONITORING_WORKSPACE --resource-group $AZURE_RESOURCE_GROUP --location "$AZURE_LOCATION" --subscription $AZURE_SUBSCRIPTION_ID
+        run: |
+        az containerapp env create \
+         --name ${{ env.AZURE_CAPP_ENV_NAME }} \
+         --logs-workspace-id ${{ env.AZURE_MONITORING_WORKSPACE }} \
+         --resource-group ${{ env.AZURE_RESOURCE_GROUP }} \
+         --location "${{ env.AZURE_LOCATION }}" \
+         --subscription ${{ env.AZURE_SUBSCRIPTION_ID }}
 
       - name: Create containerapp
-        run: az containerapp create --name $AZURE_CONTAINER_APP_NAME --resource-group $AZURE_RESOURCE_GROUP --environment $AZURE_CAPP_ENV_NAME --location $AZURE_LOCATION --subscription $AZURE_SUBSCRIPTION_ID
+        run: |
+        az containerapp create \
+        --name ${{ env.AZURE_CONTAINER_APP_NAME }} \
+        --resource-group ${{ env.AZURE_RESOURCE_GROUP }} \
+        --environment ${{ env.AZURE_CAPP_ENV_NAME }} \
+        --location ${{ env.AZURE_LOCATION }} \
+        --subscription ${{ env.AZURE_SUBSCRIPTION_ID }}
 
       - name: Build and deploy Container App [v${{ steps.gitversion.outputs.SemVer }}]
         uses: azure/container-apps-deploy-action@v2
         with:
           appSourcePath: ${{ github.workspace }}
-          acrName: $AZURE_ACR_NAME
-          containerAppName: $AZURE_CONTAINER_APP_NAME
-          resourceGroup: $AZURE_RESOURCE_GROUP
+          acrName: ${{ env.AZURE_ACR_NAME }}
+          containerAppName: ${{ env.AZURE_CONTAINER_APP_NAME }}
+          resourceGroup: ${{ env.AZURE_RESOURCE_GROUP }}
           ingress: "external"
           targetPort: 8000
-          imageToBuild: $AZURE_ACR_NAME.azurecr.io/$DOCKER_IMAGE_NAME:${{ steps.gitversion.outputs.SemVer }}
+          imageToBuild: ${{ env.AZURE_ACR_NAME }}.azurecr.io/${{ env.DOCKER_IMAGE_NAME }}:${{ steps.gitversion.outputs.SemVer }}
