@@ -49,6 +49,16 @@ jobs:
           --resource-group ${{ vars.AZURE_RESOURCE_GROUP }} \
           --location "${{ vars.AZURE_LOCATION }}" \
           --subscription ${{ vars.AZURE_SUBSCRIPTION_ID }}
+      
+      - name: Create Azure Container Registry
+        run: |
+          az acr create \
+            --name ${{ vars.AZURE_ACR_NAME }} \
+            --resource-group ${{ vars.AZURE_RESOURCE_GROUP }} \
+            --sku Basic \
+            --location "${{ vars.AZURE_LOCATION }}" \
+            --admin-enabled true \
+            --workspace ${{ vars.AZURE_MONITORING_WORKSPACE_NAME }}
 
       - name: Create containerapp
         run: |
