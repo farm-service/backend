@@ -73,7 +73,7 @@ jobs:
           az containerapp registry set \
           --name ${{ vars.AZURE_CONTAINER_APP_NAME }} \
           --resource-group ${{ vars.AZURE_RESOURCE_GROUP }} \
-          --server ${{ vars.AZURE_ACR_NAME }}..azurecr.io \
+          --server ${{ vars.AZURE_ACR_NAME }}.azurecr.io \
           --identity system
 
       - name: Build and deploy Container App [v${{ steps.gitversion.outputs.SemVer }}]
