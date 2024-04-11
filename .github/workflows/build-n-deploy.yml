@@ -68,6 +68,14 @@ jobs:
           --environment ${{ vars.AZURE_CAPP_ENV_NAME }} \
           --subscription ${{ vars.AZURE_SUBSCRIPTION_ID }}
 
+      - name: Configuring access to ACR
+        run: |
+          az containerapp registry set \
+          --name ${{ vars.AZURE_CONTAINER_APP_NAME }} \
+          --resource-group ${{ vars.AZURE_RESOURCE_GROUP }} \
+          --server ${{ vars.AZURE_ACR_NAME }}..azurecr.io \
+          --identity system
+
       - name: Build and deploy Container App [v${{ steps.gitversion.outputs.SemVer }}]
         uses: azure/container-apps-deploy-action@v2
         with:
