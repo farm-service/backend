@@ -27,4 +27,4 @@ jobs:
         docker run --name farmservice-backend-test --env-file ./.env -p 8000:8000 -d farmservice-backend-test
 
     - name: Test container's response
-      run: curl "http://localhost:8000/api/v1/test"
+      run: curl --fail http://localhost:8000 || exit 1
