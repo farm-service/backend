@@ -28,5 +28,7 @@ jobs:
 
     - name: Test container's response
       run: |
+        pwd
+        ls
         chmod +x ./tests/reachability_test.sh
         ./tests/reachability_test.sh
