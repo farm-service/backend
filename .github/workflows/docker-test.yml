@@ -1,0 +1,31 @@
+name: Docker Image Building and Running Test
+
+on:
+  pull_request:
+    types:
+    - opened
+    - edited
+    - reopened
+    - ready_for_review
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out the repository
+      uses: actions/checkout@v2
+
+    - name: Docker image build test
+      run: docker build -t farmservice-backend-test .
+
+    - name: Export variables into .env
+      run: echo "${{ secrets.BACKEND_ENVIRONMENT_VARIABLES }}" >> ./.env
+
+    - name: Docker container run test
+      run: |
+        docker run --name farmservice-backend-test --env-file ./.env -p 8000:8000 -d farmservice-backend-test
+        sleep 10
+
+    - name: Test container's response
+      run: curl --fail http://localhost:8000/api/v1/test || exit 1
