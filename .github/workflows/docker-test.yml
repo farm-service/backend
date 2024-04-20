@@ -20,7 +20,7 @@ jobs:
       run: docker build -t farmservice-backend-test .
 
     - name: Export variables into .env
-      run: echo ${{ secrets.BACKEND_ENVIRONMENT_VARIABLES }} >> .env
+      run: echo "${{ secrets.BACKEND_ENVIRONMENT_VARIABLES }}" >> ./.env
 
     - name: debug 1
       run: cat ./.env
