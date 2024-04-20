@@ -29,4 +29,4 @@ jobs:
     - name: Test container's response
       run: |
         chmod +x ./tests/reachability_test.sh
-        bash ./tests/reachability_test.sh
+        ./tests/reachability_test.sh
