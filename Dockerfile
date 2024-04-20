@@ -8,4 +8,4 @@ RUN python -m pip install -r requirements.txt
 
 COPY ./app ./app
 
-CMD uvicorn app:create_app --host 0.0.0.0 --port 8000
+CMD uvicorn app:create_app --host 0.0.0.0 --port 8000 --forwarded-allow-ips='*' --proxy-headers
