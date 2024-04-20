@@ -23,9 +23,9 @@ jobs:
       run: echo "${{ secrets.BACKEND_ENVIRONMENT_VARIABLES }}" >> ./.env
 
     - name: Docker container run test
-      run: docker run --name farmservice-backend-test --env-file ./.env -p 8000:8000 -d farmservice-backend-test
+      run: |
+        docker run --name farmservice-backend-test --env-file ./.env -p 8000:8000 -d farmservice-backend-test
+        sleep 10
 
     - name: Test container's response
-      run: |
-        sleep 5
-        curl --fail http://localhost:8000 || exit 1
+      run: curl --fail http://localhost:8000 || exit 1
