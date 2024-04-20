@@ -20,7 +20,7 @@ jobs:
 
     - name: Docker container run test
       run: |
-        docker run --name farmservice-backend-test -d farmservice-backend-test --env-file .env
+        docker run --name farmservice-backend-test --env-file ./.env -p 8000:8000 -d farmservice-backend-test
 
     - name: Test container's response
       run: bash ./tests/reachability_test.sh
