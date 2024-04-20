@@ -24,12 +24,10 @@ jobs:
         uses: gittools/actions/gitversion/execute@v0
 
       - name: Inserting FullSemVer into the build
-        run: |
-          sed -i "s/BUILD_FULL_SEMANTIC_VERSION = \"dev-build\"/BUILD_FULL_SEMANTIC_VERSION = \"${{ steps.gitversion.outputs.FullSemVer }}\"/" ${{ github.workspace }}/app/configuration/settings.py
+        run: sed -i "s/BUILD_FULL_SEMANTIC_VERSION = \"dev-build\"/BUILD_FULL_SEMANTIC_VERSION = \"${{ steps.gitversion.outputs.FullSemVer }}\"/" ${{ github.workspace }}/app/configuration/settings.py
 
       - name: Parsing BACKEND_ENVIRONMENT_VARIABLES
-        run: |
-          echo INLINE_BACKENV="${{ secrets.BACKEND_ENVIRONMENT_VARIABLES }}" | tr '\n' ' ' >> "$GITHUB_ENV"
+        run: echo INLINE_BACKENV=\"${{ secrets.BACKEND_ENVIRONMENT_VARIABLES }}\" | tr '\n' ' ' >> "$GITHUB_ENV"
 
       - run: echo "$INLINE_BACKENV"
 
@@ -48,5 +46,5 @@ jobs:
           ingress: "external"
           targetPort: 8000
           imageToBuild: ${{ vars.AZURE_ACR_NAME }}.azurecr.io/${{ vars.DOCKER_IMAGE_NAME }}:${{ steps.gitversion.outputs.SemVer }}
-          environmentVariables: ${{ secrets.BACKEND_ENVIRONMENT_VARIABLES }}
+          environmentVariables: ${{ vars.INLINE_BACKENV }}
  
