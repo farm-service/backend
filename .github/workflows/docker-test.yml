@@ -16,11 +16,11 @@ jobs:
       run: docker build -t farmservice-backend-test .
 
     - name: Export variables into .env
-      run: ${{ secrets.BACKEND_ENVIRONMENT_VARIABLES }} >> .env
+      run: echo ${{ secrets.BACKEND_ENVIRONMENT_VARIABLES }} >> .env
 
     - name: Docker container run test
       run: |
-        docker run --name farmservice-backend-test --env-file ./.env -p 8000:8000 -d farmservice-backend-test
+        docker run --rm --name farmservice-backend-test --env-file ./.env -p 8000:8000 -d farmservice-backend-test
 
     - name: Test container's response
       run: |
