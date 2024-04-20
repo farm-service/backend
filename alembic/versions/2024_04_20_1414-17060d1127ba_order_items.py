@@ -1,8 +1,8 @@
 """order_items
 
-Revision ID: 7c6bd79c0c0e
+Revision ID: 17060d1127ba
 Revises: 4da0aac7c342
-Create Date: 2024-04-20 13:20:03.552056
+Create Date: 2024-04-20 14:14:13.964854
 
 """
 from typing import Sequence, Union
@@ -11,7 +11,7 @@ from alembic import op
 import sqlalchemy as sa
 
 # revision identifiers, used by Alembic.
-revision: str = '7c6bd79c0c0e'
+revision: str = '17060d1127ba'
 down_revision: Union[str, None] = '4da0aac7c342'
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
@@ -22,10 +22,10 @@ def upgrade() -> None:
     op.create_table('order_item',
                     sa.Column('id', sa.UUID(), nullable=False),
                     sa.Column('amount', sa.Integer(), nullable=False),
-                    sa.Column('created', sa.TIMESTAMP(), nullable=True),
-                    sa.Column('modified', sa.TIMESTAMP(), nullable=True),
-                    sa.Column('date_deliver', sa.TIMESTAMP(), nullable=True),
-                    sa.Column('deadline', sa.TIMESTAMP(), nullable=True),
+                    sa.Column('created', sa.TIMESTAMP(timezone=True), nullable=True),
+                    sa.Column('modified', sa.TIMESTAMP(timezone=True), nullable=True),
+                    sa.Column('date_deliver', sa.TIMESTAMP(timezone=True), nullable=True),
+                    sa.Column('deadline', sa.TIMESTAMP(timezone=True), nullable=True),
                     sa.Column('status', sa.Integer(), nullable=True),
                     sa.Column('ingredient_id', sa.Integer(), nullable=True),
                     sa.Column('consumer_id', sa.UUID(), nullable=True),
