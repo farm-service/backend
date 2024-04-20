@@ -42,4 +42,5 @@ jobs:
           ingress: "external"
           targetPort: 8000
           imageToBuild: ${{ vars.AZURE_ACR_NAME }}.azurecr.io/${{ vars.DOCKER_IMAGE_NAME }}:${{ steps.gitversion.outputs.SemVer }}
-          environmentVariables: $(echo "${{ secrets.BACKEND_ENVIRONMENT_VARIABLES }}" | tr '\n' ' ')
+          environmentVariables: ${{ replace(secrets.BACKEND_ENVIRONMENT_VARIABLES, '\n', ' ') }}
+ 
