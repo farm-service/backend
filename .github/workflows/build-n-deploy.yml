@@ -29,7 +29,7 @@ jobs:
 
       - name: Parsing BACKEND_ENVIRONMENT_VARIABLES
         run: |
-          $(echo INLINE_BACKENV="${{ secrets.BACKEND_ENVIRONMENT_VARIABLES }}" | tr '\n' ' ') >> "$GITHUB_ENV"
+          echo INLINE_BACKENV="${{ secrets.BACKEND_ENVIRONMENT_VARIABLES }}" | tr '\n' ' ' >> "$GITHUB_ENV"
 
       - run: echo "$INLINE_BACKENV"
 
