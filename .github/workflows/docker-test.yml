@@ -1,0 +1,26 @@
+name: Docker Image Building and Running Test
+
+on:
+  pull_request:
+    types: [opened, reopened, ready_for_review]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out the repository
+      uses: actions/checkout@v2
+
+    - name: Docker image build test
+      run: docker build -t farmservice-backend-test .
+
+    - name: Export variables into .env
+      run: ${{ secrets.BACKEND_ENVIRONMENT_VARIABLES }} >> .env
+
+    - name: Docker container run test
+      run: |
+        docker run --name farmservice-backend-test -d farmservice-backend-test --env-file .env
+
+    - name: Test container's response
+      run: bash ./tests/reachability_test.sh
