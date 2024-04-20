@@ -26,6 +26,10 @@ jobs:
       run: |
         docker run --name farmservice-backend-test --env-file ./.env -p 8000:8000 -d farmservice-backend-test
 
+    - name: Docker container run check
+      run: |
+        docker ps
+
     - name: Test container's response
       run: |
         URL="http://localhost:8000/api/v1/test"
