@@ -24,7 +24,7 @@ jobs:
 
     - name: Docker container run test
       run: |
-        docker run --rm --name farmservice-backend-test --env-file ./.env -p 8000:8000 -d farmservice-backend-test
+        docker run --name farmservice-backend-test --env-file ./.env -p 8000:8000 -d farmservice-backend-test
 
     - name: Test container's response
       run: |
