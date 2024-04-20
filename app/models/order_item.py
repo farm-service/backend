@@ -23,4 +23,6 @@ class OrderItem(Base):
     ingredient = relationship('Ingredient')
 
     def __str__(self):
-        return f"{self.id}_{self.name}"
+        consumer_name = self.consumer.name if self.consumer else "Unknown"
+        ingredient_name = self.ingredient.name if self.ingredient.name else "Unknown"
+        return f"{consumer_name}_{ingredient_name}_{self.amount}"
