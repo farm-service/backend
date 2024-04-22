@@ -1,4 +1,6 @@
 from fastapi import FastAPI
+from fastapi_utils.tasks import repeat_every
+from apscheduler.schedulers.background import BackgroundScheduler
 import uuid
 
 from fastapi_users import FastAPIUsers
@@ -9,6 +11,7 @@ from app.configuration.routes import __routes__
 from app.configuration.admin import __admins__
 from app.auth.auth import auth_backend
 from app.configuration.settings import SECRET_JWT
+from app.internal.events.generate_orders import generate_orders
 from app.models.user import User
 from app.auth.schemas import UserRead, UserCreate
 from app.auth.manager import get_user_manager
@@ -30,7 +33,11 @@ class Server:
 
     @staticmethod
     def __register_events(app: FastAPI) -> None:
-        ...
+        app.on_event('startup')(repeat_every(seconds=60 * 60 * 12)(generate_orders))
+        # configure scheduler
+        scheduler = BackgroundScheduler()
+        scheduler.add_job(generate_orders, "cron", hour=0, day_of_week='sun')
+        scheduler.start()
 
     @staticmethod
     def __register_routes(app: FastAPI) -> None:
