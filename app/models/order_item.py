@@ -7,6 +7,7 @@ from sqlalchemy import Column, Integer, TIMESTAMP, ForeignKey, UUID, select, Res
 from sqlalchemy.orm import relationship
 
 from app.auth import get_async_session
+from app.configuration.settings import logger
 from app.models.base import Base
 
 
@@ -59,7 +60,7 @@ class OrderItem(Base):
                 await session.commit()
         except Exception as e:
             traceback.print_exc()
-            print(f'Error during commit: {e}')
+            logger.error(f'Error during commit: {e}')
 
     @staticmethod
     async def save_order_item(order_item: 'OrderItem') -> None:
@@ -79,4 +80,4 @@ class OrderItem(Base):
                 session.add(order_item)
                 await session.commit()
             except Exception as e:
-                print(f'Error during commit: {e}')
+                logger.error(f'Error during commit: {e}')

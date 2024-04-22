@@ -4,6 +4,8 @@ import pytz
 from sqlalchemy.ext.declarative import DeclarativeMeta
 from typing import List, Optional, Dict, Type
 
+from app.configuration.settings import logger
+
 
 class CalculateOrders:
     """
@@ -50,4 +52,4 @@ class CalculateOrders:
                         )
             return result
         except Exception as e:
-            print(f'Exception occurred: {e}')
+            logger.error(f'Exception occurred: {e}')

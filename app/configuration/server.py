@@ -10,7 +10,7 @@ from app.admin.auth import AdminAuth
 from app.configuration.routes import __routes__
 from app.configuration.admin import __admins__
 from app.auth.auth import auth_backend
-from app.configuration.settings import SECRET_JWT
+from app.configuration.settings import SECRET_JWT, logger
 from app.internal.events.generate_orders import generate_orders
 from app.models.user import User
 from app.auth.schemas import UserRead, UserCreate
@@ -35,9 +35,12 @@ class Server:
     def __register_events(app: FastAPI) -> None:
         app.on_event('startup')(repeat_every(seconds=60 * 60 * 12)(generate_orders))
         # configure scheduler
-        scheduler = BackgroundScheduler()
-        scheduler.add_job(generate_orders, "cron", hour=0, day_of_week='sun')
-        scheduler.start()
+        try:
+            scheduler = BackgroundScheduler()
+            scheduler.add_job(generate_orders, "cron", hour=0, day_of_week='sun')
+            scheduler.start()
+        except Exception as e:
+            logger.error(f"Failed to start scheduler: {e}")
 
     @staticmethod
     def __register_routes(app: FastAPI) -> None:

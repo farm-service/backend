@@ -1,6 +1,6 @@
 import aiohttp
 
-from app.configuration.settings import URL_FORCAST
+from app.configuration.settings import URL_FORECAST
 
 
 class GetForecast:
@@ -9,12 +9,12 @@ class GetForecast:
     """
 
     @classmethod
-    async def get_forcast(cls):
+    async def get_forecast(cls):
         """
         Get forecast from farm-ML service
         Returns (Dict): Forecast dictionary
 
         """
         async with aiohttp.ClientSession() as session:
-            async with session.get(URL_FORCAST) as response:
+            async with session.get(URL_FORECAST) as response:
                 return await response.json()

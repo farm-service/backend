@@ -4,6 +4,7 @@ from sqlalchemy import Column, Integer, Float, ForeignKey, select
 from sqlalchemy.orm import relationship, selectinload
 
 from app.auth import get_async_session
+from app.configuration.settings import logger
 from app.models import Ingredient, UnitOfMeasurement, Product
 from app.models.base import Base
 from app.serializers.ingredient import IngredientModel
@@ -77,4 +78,4 @@ class ProductIngredientAssociation(Base):
                     )
             return result_list
         except Exception as e:
-            print(f'Exception query: {e}')
+            logger.error(f'Error during commit: {e}')

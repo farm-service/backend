@@ -1,3 +1,5 @@
+import logging
+
 from fastapi import FastAPI
 from app.configuration.server import Server
 from app.configuration.settings import BUILD_FULL_SEMANTIC_VERSION

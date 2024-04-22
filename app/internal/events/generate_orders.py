@@ -9,7 +9,7 @@ async def generate_orders():
     Returns:
 
     """
-    forecast = await GetForecast.get_forcast()
+    forecast = await GetForecast.get_forecast()
     calculated_orders = await CalculateOrders.process(
         forecast=forecast,
         recipe_model=ProductIngredientAssociation,
