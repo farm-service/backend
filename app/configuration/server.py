@@ -1,5 +1,4 @@
 from fastapi import FastAPI
-from fastapi_utils.tasks import repeat_every
 from apscheduler.schedulers.background import BackgroundScheduler
 import uuid
 
@@ -33,7 +32,7 @@ class Server:
 
     @staticmethod
     def __register_events(app: FastAPI) -> None:
-        app.on_event('startup')(repeat_every(seconds=60 * 60 * 12)(generate_orders))
+        app.on_event('startup')(generate_orders)
         # configure scheduler
         try:
             scheduler = BackgroundScheduler()
