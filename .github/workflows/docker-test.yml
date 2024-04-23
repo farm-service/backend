@@ -26,7 +26,7 @@ jobs:
     - name: Docker container run test
       run: |
         docker run --name farmservice-backend-test --env-file ./.env -p 8000:8000 -d farmservice-backend-test
-        sleep 10
+        sleep 30
 
     - name: Test container's response
       run: curl --fail http://localhost:8000/api/v1/test || exit 1
