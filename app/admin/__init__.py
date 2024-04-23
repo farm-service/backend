@@ -5,6 +5,7 @@ from app.admin.role import RoleAdmin
 from app.admin.product_ingredient_association import ProductIngredientAssociationAdmin
 from app.admin.product import ProductAdmin
 from app.admin.status import StatusAdmin
+from app.admin.order_item import OrderItemAdmin
 
 # TODO automate class collection
 
@@ -15,5 +16,6 @@ __all__ = [
     UnitOfMeasurementAdmin,
     RoleAdmin,
     ProductIngredientAssociationAdmin,
-    StatusAdmin
+    StatusAdmin,
+    OrderItemAdmin
 ]
