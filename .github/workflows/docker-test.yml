@@ -29,4 +29,4 @@ jobs:
         echo "CONTAINER_ID=$(docker run --name farmservice-backend-test --env-file ./.env -p 8000:8000 -d farmservice-backend-test)" >> "$GITHUB_OUTPUT"
 
     - name: Test container's response
-      run: curl --retry-all-errors --retry-delay 5 --retry 24 http://localhost:8000/api/v1/test || ( docker logs ${{ steps.container-run.outputs.CONTAINER_ID }}; exit 1 )
+      run: curl --retry-all-errors --retry-delay 5 --retry 24 http://localhost:8000/api/v1/test || ( echo 'ERROR - container unreachable. Printing out container logs.'; docker logs ${{ steps.container-run.outputs.CONTAINER_ID }}; exit 1 )
