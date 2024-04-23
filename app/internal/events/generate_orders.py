@@ -1,15 +1,13 @@
-from typing import NoReturn
-
 from app.configuration.settings import logger
 from app.domain.calculate_orders import CalculateOrders
 from app.internal.events.calculate_orders_repository import CalculateOrdersRepository
 from app.internal.integrations.get_forecast import GetForecast
 
 
-async def generate_orders() -> NoReturn:
+async def generate_orders() -> None:
     """
     Event generate orders from forecast
-    Returns: NoReturn
+    Returns: None
 
     """
     try:
@@ -19,4 +17,4 @@ async def generate_orders() -> NoReturn:
             repository=CalculateOrdersRepository()
         )
     except Exception as e:
-        logger.error(f'Exception occurred: {e}')
+        logger.error(f'Exception occurred: {type(e).__name__}: {e}')

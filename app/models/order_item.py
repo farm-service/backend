@@ -1,10 +1,10 @@
-import traceback
 import uuid
 from datetime import datetime
-from typing import List, NoReturn, Optional
+from typing import List, Optional
 
 from sqlalchemy import Column, Integer, TIMESTAMP, ForeignKey, UUID, select, Result
 from sqlalchemy.orm import relationship
+from sqlalchemy.exc import DatabaseError, IntegrityError
 
 from app.auth import get_async_session
 from app.configuration.settings import logger
@@ -34,7 +34,7 @@ class OrderItem(Base):
         return f"{consumer_name}_{ingredient_name}_{self.amount}"
 
     @classmethod
-    async def create_or_update_orders(cls, orders_data: List['OrderItem']) -> NoReturn:
+    async def create_or_update_orders(cls, orders_data: List['OrderItem']) -> None:
         try:
             async for session in get_async_session():
                 for order_data in orders_data:
@@ -58,9 +58,8 @@ class OrderItem(Base):
                         session.add(order_data)
 
                 await session.commit()
-        except Exception as e:
-            traceback.print_exc()
-            logger.error(f'Error during commit: {e}')
+        except (DatabaseError, IntegrityError) as e:
+            logger.error(f'Database operation failed: {e}')
 
     @staticmethod
     async def save_order_item(order_item: 'OrderItem') -> None:

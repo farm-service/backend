@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 
 import pytz
-from typing import Optional, Dict, NoReturn
+from typing import Optional, Dict
 
 from app.domain.repositories.calculate_orders_repository_interface import CalculateOrdersRepositoryInterface
 
@@ -16,7 +16,7 @@ class CalculateOrders:
             cls,
             forecast: Optional[Dict[str, dict]],
             repository: CalculateOrdersRepositoryInterface
-    ) -> NoReturn:
+    ) -> None:
         """
         Processes the forecast data to generate orders
 
@@ -25,7 +25,7 @@ class CalculateOrders:
             repository (CalculateOrdersRepositoryInterface): The repository that implements access to data layer
 
         Returns:
-            NoReturn
+            None
         """
         result = list()
         for product_id, value in forecast.items():

@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from apscheduler.schedulers.background import BackgroundScheduler
+from apscheduler.schedulers.base import SchedulerNotRunningError, SchedulerAlreadyRunningError
 import uuid
 
 from fastapi_users import FastAPIUsers
@@ -38,7 +39,7 @@ class Server:
             scheduler = BackgroundScheduler()
             scheduler.add_job(generate_orders, "cron", hour=0, day_of_week='sun')
             scheduler.start()
-        except Exception as e:
+        except (SchedulerAlreadyRunningError, SchedulerNotRunningError) as e:
             logger.error(f"Failed to start scheduler: {e}")
 
     @staticmethod
