@@ -2,8 +2,8 @@ from typing import NoReturn
 
 from app.configuration.settings import logger
 from app.domain.calculate_orders import CalculateOrders
+from app.internal.events.calculate_orders_repository import CalculateOrdersRepository
 from app.internal.integrations.get_forecast import GetForecast
-from app.models import ProductIngredientAssociation, OrderItem
 
 
 async def generate_orders() -> NoReturn:
@@ -14,11 +14,9 @@ async def generate_orders() -> NoReturn:
     """
     try:
         forecast = await GetForecast.get_forecast()
-        calculated_orders = await CalculateOrders.process(
+        await CalculateOrders.process(
             forecast=forecast,
-            recipe_model=ProductIngredientAssociation,
-            order_model=OrderItem
+            repository=CalculateOrdersRepository()
         )
-        await OrderItem.create_or_update_orders(calculated_orders)
     except Exception as e:
         logger.error(f'Exception occurred: {e}')

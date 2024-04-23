@@ -1,9 +1,9 @@
 from datetime import datetime, timedelta
 
 import pytz
-from typing import List, Optional, Dict, Type, Generic, TypeVar, Callable
+from typing import Optional, Dict, NoReturn
 
-T = TypeVar('T')
+from app.domain.repositories.calculate_orders_repository_interface import CalculateOrdersRepositoryInterface
 
 
 class CalculateOrders:
@@ -15,23 +15,21 @@ class CalculateOrders:
     async def process(
             cls,
             forecast: Optional[Dict[str, dict]],
-            recipe_model: Generic[T],
-            order_model: Callable[..., T]
-    ) -> List[T]:
+            repository: CalculateOrdersRepositoryInterface
+    ) -> NoReturn:
         """
         Processes the forecast data to generate orders
 
         Args:
             forecast (Optional[Dict[str, dict]]): A dictionary containing forecast data
-            recipe_model (Generic[T]): The model class representing recipe data
-            order_model (Callable[..., T]): The model class representing order data
+            repository (CalculateOrdersRepositoryInterface): The repository that implements access to data layer
 
         Returns:
-            List[T]: A list of order objects generated based on the forecast data
+            NoReturn
         """
         result = list()
         for product_id, value in forecast.items():
-            recipe = await recipe_model.get_items_by_product(product_id)
+            recipe = await repository.get_items_by_product(product_id)
             for date, amount in value.items():
                 # TODO: working with timezone is temp design. Delete when ML-service return right datetime objects
                 dt_without_timezone = datetime.strptime(date, '%Y-%m-%d %H:%M:%S')
@@ -40,7 +38,7 @@ class CalculateOrders:
                 dt_with_timezone = timezone.localize(dt_without_timezone) - timedelta(days=1)
                 for ingredient in recipe:
                     result.append(
-                        order_model(
+                        repository.construct_order_instances(
                             amount=amount * ingredient.nominal_coefficient,
                             deadline=dt_with_timezone,
                             status_id=1,
@@ -49,4 +47,4 @@ class CalculateOrders:
                             producer_id=None
                         )
                     )
-        return result
+        await repository.save_orders(orders=result)
